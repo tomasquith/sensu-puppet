@@ -304,6 +304,10 @@
 #   String. The handler to use when deregistering a client on stop.
 #   Default: undef
 #
+# [*windows_source_url*]
+#   String. The url of the sensu msi to install.
+#   Default: "http://repositories.sensuapp.org/msi/sensu-${sensu::version}.msi"
+#
 # [*handlers*]
 #   Hash of handlers for use with create_sources(sensu::handler).
 #   Example value: { 'email' => { 'type' => 'pipe', 'command' => 'mail' } }
@@ -421,6 +425,7 @@ class sensu (
   $redact                         = [],
   $deregister_on_stop             = false,
   $deregister_handler             = undef,
+  $windows_source_url             = "http://repositories.sensuapp.org/msi/sensu-${sensu::version}.msi",
 
   ### START Hiera Lookups ###
   $extensions                  = {},

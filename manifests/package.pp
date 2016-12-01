@@ -2,7 +2,9 @@
 #
 # Installs the Sensu packages
 #
-class sensu::package {
+class sensu::package (
+  $windows_source_url = $sensu::windows_source_url,
+){
 
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
@@ -52,7 +54,7 @@ class sensu::package {
 
       remote_file { $pkg_source:
         ensure   => present,
-        source   => "http://repositories.sensuapp.org/msi/sensu-${sensu::version}.msi",
+        source   => $windows_source_url,
         checksum => $::sensu::package_checksum,
       }
     }
