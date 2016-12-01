@@ -440,6 +440,8 @@ class sensu (
   $handler_defaults            = {},
   $checks                      = {},
   $check_defaults              = {},
+  $plugins                     = {},
+  $plugin_defaults             = {},
   $filters                     = {},
   $filter_defaults             = {},
   $mutators                    = {},
@@ -535,6 +537,7 @@ class sensu (
   create_resources('::sensu::extension', $extensions)
   create_resources('::sensu::handler', $handlers, $handler_defaults)
   create_resources('::sensu::check', $checks, $check_defaults)
+  create_resources('::sensu::plugin', $plugins, $plugin_defaults)
   create_resources('::sensu::filter', $filters, $filter_defaults)
   create_resources('::sensu::mutator', $mutators)
 
