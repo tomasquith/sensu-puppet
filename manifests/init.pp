@@ -582,7 +582,17 @@ class sensu (
   if $plugins_dir {
     sensu::plugin { $plugins_dir: type => 'directory' }
   } else {
-    sensu::plugin { $plugins: install_path => '/etc/sensu/plugins' }
+      case $::osfamily {
+      'Debian','RedHat': {
+        sensu::plugin { $plugins: install_path => '/etc/sensu/plugins' }
+      }
+
+      'windows': {
+        sensu::plugin { $plugins: install_path => 'C:/etc/sensu/plugins' }
+      }
+
+      default: {}
+    }
   }
 
 }
