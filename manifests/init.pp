@@ -425,7 +425,7 @@ class sensu (
   $redact                         = [],
   $deregister_on_stop             = false,
   $deregister_handler             = undef,
-  $windows_source_url             = "http://repositories.sensuapp.org/msi/sensu-${sensu::version}.msi",
+  $windows_source_url             = "http://repositories.sensuapp.org/msi/sensu-${version}.msi",
 
   ### START Hiera Lookups ###
   $extensions                  = {},
