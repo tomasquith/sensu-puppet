@@ -88,6 +88,12 @@
 #   Default: true
 #   Valid values: true, false
 #
+#
+# [*manage_plugins*]
+#   Boolean. Manage the install of plugins/dir
+#   Default: true
+#   Valid values: true, false
+#
 # [*manage_plugins_dir*]
 #   Boolean. Manage the sensu plugins directory
 #   Default: true
@@ -362,6 +368,7 @@ class sensu (
   $api                            = false,
   $manage_services                = true,
   $manage_user                    = true,
+  $manage_plugins                 = true,
   $manage_plugins_dir             = true,
   $manage_handlers_dir            = true,
   $manage_mutators_dir            = true,
@@ -579,20 +586,13 @@ class sensu (
   class { '::sensu::enterprise::dashboard': } ->
   anchor {'sensu::end': }
 
-  if $plugins_dir {
-    sensu::plugin { $plugins_dir: type => 'directory' }
-  } else {
-      case $::osfamily {
-      'Debian','RedHat': {
-        sensu::plugin { $plugins: install_path => '/etc/sensu/plugins' }
+  if $manage_plugins {
+    if $plugins_dir {
+      sensu::plugin { $plugins_dir: type => 'directory', install_path }
+    } else {
+          sensu::plugin { $plugins: install_path => '/etc/sensu/plugins' }
+        }
       }
-
-      'windows': {
-        sensu::plugin { $plugins: install_path => 'C:/etc/sensu/plugins' }
-      }
-
-      default: {}
     }
   }
-
 }
